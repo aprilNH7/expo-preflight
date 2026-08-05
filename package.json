@@ -1,0 +1,49 @@
+{
+  "name": "expo-preflight",
+  "version": "1.0.0",
+  "description": "Catch what App Store review will reject in your Expo app, before you spend the build minutes.",
+  "keywords": [
+    "expo",
+    "react-native",
+    "eas",
+    "app-store",
+    "app-store-review",
+    "app-store-rejection",
+    "testflight",
+    "google-play",
+    "ios",
+    "android",
+    "preflight",
+    "lint",
+    "ci",
+    "cli"
+  ],
+  "license": "MIT",
+  "author": "aprilNH7",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aprilNH7/expo-preflight.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aprilNH7/expo-preflight/issues"
+  },
+  "homepage": "https://github.com/aprilNH7/expo-preflight#readme",
+  "type": "commonjs",
+  "bin": {
+    "expo-preflight": "bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "lint": "node -e \"require('./src/checks.js');require('./src/load.js');require('./src/report.js');console.log('ok')\""
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {}
+}
