@@ -18,10 +18,10 @@ values are read, only their names.
 
 Options
   --json           machine-readable output
-  --verbose        include checks that were skipped as not applicable
-  --dir <path>     project directory (default: cwd)
+  --verbose        include checks skipped as not applicable
+  --dir <path>     project directory, default cwd
   --no-warn-exit   exit 0 even with warnings (default already ignores warnings)
-  --strict         exit 1 on warnings too, for CI
+  --strict         exit 1 on warnings too
   -h, --help       this
   -v, --version    print version
 
