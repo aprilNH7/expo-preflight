@@ -65,6 +65,8 @@ function gitignoreCovers(gitignore, filename) {
 
   for (const raw of lines) {
     if (raw.startsWith('!')) continue; // a negation cannot be what covers us
+    // Strip leading and trailing slashes so both "secrets/" and "/secrets"
+    // are treated as directory rules that cover anything beneath them.
     const line = raw.replace(/^\/+/, '').replace(/\/+$/, '');
     if (!line) continue;
     if (line === filename || line === base) return true;
