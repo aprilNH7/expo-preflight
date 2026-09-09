@@ -364,6 +364,12 @@ test('hand-managed build numbers warn about deleted uploads', () => {
   assert.match(r.rejects, /90186/);
 });
 
+test('hand-managed build numbers with only one platform still warn', () => {
+  const r = checkVersioning('1.0.0', '20', null, false);
+  assert.strictEqual(r.status, WARN);
+  assert.match(r.detail, /iOS buildNumber 20/);
+});
+
 // --- submit config ------------------------------------------------------
 
 test('a complete submit profile passes', () => {
