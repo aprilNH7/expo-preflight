@@ -442,7 +442,7 @@ function checkSubmitConfig(submitProfile) {
   if (!ios.ascAppId) missing.push('ascAppId');
   if (!ios.appleTeamId) missing.push('appleTeamId');
 
-  if (!Object.keys(ios).length) {
+  if (!submitProfile) {
     return v(
       'submit-config',
       'No eas.json submit profile',

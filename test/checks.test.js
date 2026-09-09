@@ -394,6 +394,13 @@ test('a partial submit profile warns and names the gap', () => {
   assert.match(r.detail, /appleTeamId/);
 });
 
+test('an empty submit ios object warns about every missing field', () => {
+  const r = checkSubmitConfig({ ios: {} });
+  assert.strictEqual(r.status, WARN);
+  assert.match(r.detail, /ascAppId/);
+  assert.match(r.detail, /appleTeamId/);
+});
+
 test('no submit block is information, not a problem', () => {
   assert.strictEqual(checkSubmitConfig(null).status, INFO);
 });
