@@ -39,7 +39,15 @@ function parseArgs(argv) {
     else if (a === '--verbose') opts.verbose = true;
     else if (a === '--strict') opts.strict = true;
     else if (a === '--no-warn-exit') opts.strict = false;
-    else if (a === '--dir') opts.dir = path.resolve(argv[++i] || '.');
+    else if (a === '--dir') {
+      const next = argv[i + 1];
+      if (!next || next.startsWith('-')) {
+        process.stderr.write('--dir requires a path. Try --help.\n');
+        process.exit(2);
+      }
+      opts.dir = path.resolve(next);
+      i += 1;
+    }
     else if (a === '-h' || a === '--help') opts.help = true;
     else if (a === '-v' || a === '--version') opts.version = true;
     else if (a.startsWith('-')) opts.unknown = a;

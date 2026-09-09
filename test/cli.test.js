@@ -98,6 +98,12 @@ test('an unknown option is refused rather than ignored', () => {
   assert.match(r.stderr, /Unknown option/);
 });
 
+test('--dir without a value is rejected instead of consuming the next flag', () => {
+  const r = run(['--dir', '--json']);
+  assert.strictEqual(r.code, 2);
+  assert.match(r.stderr, /--dir requires a path/);
+});
+
 test('a directory with no Expo project exits 2, not 1', () => {
   // Exit 1 would mean "your app has problems". Exit 2 means "wrong directory".
   const dir = tmpdir();
