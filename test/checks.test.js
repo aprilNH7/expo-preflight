@@ -578,6 +578,13 @@ test('caret-prefixed versions are read as the major they pin', () => {
   assert.strictEqual(checkSdkVersion('^53.0.0').status, PASS);
 });
 
+test('tilde, gte and exact boundary versions are parsed correctly', () => {
+  assert.strictEqual(checkSdkVersion('~47.0.0').status, WARN, 'tilde old');
+  assert.strictEqual(checkSdkVersion('>=47.0.0').status, WARN, 'gte old');
+  assert.strictEqual(checkSdkVersion('50.0.0').status, PASS, 'exact boundary');
+  assert.strictEqual(checkSdkVersion('latest').status, SKIP, 'tag cannot be parsed');
+});
+
 // --- shape ------------------------------------------------------------
 
 test('every failing or warning verdict carries a fix', () => {
