@@ -292,6 +292,10 @@ test('a legitimate id containing a placeholder word as a substring is not flagge
   assert.strictEqual(checkBundleIds('com.testinglabs.app', 'com.testinglabs.app').status, PASS);
 });
 
+test('a placeholder word with trailing digits is not treated as a placeholder', () => {
+  assert.strictEqual(checkBundleIds('com.example123.app', 'com.example123.app').status, PASS);
+});
+
 // --- store urls ---------------------------------------------------------
 
 test('missing privacy and support urls warn', () => {
