@@ -215,6 +215,23 @@ test('--strict turns warnings into a non-zero exit', () => {
   }
 });
 
+test('--no-warn-exit overrides --strict so warnings do not fail', () => {
+  const dir = tmpdir();
+  try {
+    writeProject(dir, {
+      expo: {
+        ios: { bundleIdentifier: 'com.iqgen.energy', config: { usesNonExemptEncryption: false } },
+        android: { package: 'com.iqgen.energy', adaptiveIcon: { foregroundImage: './icon.png' } },
+      },
+      eas: { build: { production: { channel: 'production' } } },
+      gitignore: 'node_modules\n',
+    });
+    assert.strictEqual(run(['--dir', dir, '--strict', '--no-warn-exit']).code, 0);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 test('the human report leads with problems, not passes', () => {
   const dir = tmpdir();
   try {
