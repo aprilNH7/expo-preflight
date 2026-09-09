@@ -710,7 +710,8 @@ function checkPlayServiceAccount(androidSubmit, presentFiles, gitignore) {
 // ---------------------------------------------------------------------------
 
 function checkSdkVersion(sdkVersion) {
-  const major = parseInt(String(sdkVersion || '').split('.')[0], 10);
+  const cleaned = String(sdkVersion || '').replace(/^[\^~>=<]+/, '');
+  const major = parseInt(cleaned.split('.')[0], 10);
   if (!major) {
     return v('sdk-version', 'Expo SDK version unknown', SKIP, 'Could not read the expo dependency version.');
   }

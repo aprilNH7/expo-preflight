@@ -569,6 +569,11 @@ test('an unreadable version is skipped rather than guessed', () => {
   assert.strictEqual(checkSdkVersion('workspace:*').status, SKIP);
 });
 
+test('caret-prefixed versions are read as the major they pin', () => {
+  assert.strictEqual(checkSdkVersion('^47.0.0').status, WARN);
+  assert.strictEqual(checkSdkVersion('^53.0.0').status, PASS);
+});
+
 // --- shape ------------------------------------------------------------
 
 test('every failing or warning verdict carries a fix', () => {
