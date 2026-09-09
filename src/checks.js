@@ -46,6 +46,7 @@ const SECRET_FILE_PATTERNS = [
   { glob: '*.keystore', what: 'an Android signing keystore' },
   { glob: '*.jks', what: 'an Android signing keystore' },
   { glob: 'google-service-account.json', what: 'a Play publishing service account' },
+  { glob: 'service-account.json', what: 'a Play publishing service account' },
   { glob: 'google-services.json', what: 'Firebase client config' },
   { glob: 'GoogleService-Info.plist', what: 'Firebase client config' },
 ];

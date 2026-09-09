@@ -94,6 +94,13 @@ test('a keystore in a subdirectory is still found', () => {
   assert.strictEqual(r.status, FAIL);
 });
 
+test('a generic service-account.json is also flagged', () => {
+  const r = checkSecretFiles(['service-account.json'], '');
+  assert.strictEqual(r.status, FAIL);
+  assert.match(r.detail, /service-account\.json/);
+  assert.match(r.detail, /Play publishing service account/);
+});
+
 // --- EXPO_PUBLIC_ ---------------------------------------------------------
 
 test('a secret behind EXPO_PUBLIC_ is a blocker', () => {
