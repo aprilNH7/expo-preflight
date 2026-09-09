@@ -35,7 +35,7 @@ function run(args, cwd) {
 
 // Build a real PNG so the header parser is tested against actual bytes rather
 // than a hand-rolled buffer that happens to match our own assumptions.
-function makePng(file, width, height, colorType) {
+function makePng(file, width, height, colorType, trns) {
   const chunk = (type, data) => {
     const len = Buffer.alloc(4);
     len.writeUInt32BE(data.length);
@@ -51,15 +51,13 @@ function makePng(file, width, height, colorType) {
   ihdr.writeUInt8(colorType, 9);
   const channels = colorType === 6 ? 4 : colorType === 4 ? 2 : colorType === 2 ? 3 : 1;
   const raw = Buffer.alloc(height * (1 + width * channels));
-  fs.writeFileSync(
-    file,
-    Buffer.concat([
-      Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
-      chunk('IHDR', ihdr),
-      chunk('IDAT', zlib.deflateSync(raw)),
-      chunk('IEND', Buffer.alloc(0)),
-    ])
-  );
+  const chunks = [
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+    chunk('IHDR', ihdr),
+  ];
+  if (trns) chunks.push(chunk('tRNS', trns));
+  chunks.push(chunk('IDAT', zlib.deflateSync(raw)), chunk('IEND', Buffer.alloc(0)));
+  fs.writeFileSync(file, Buffer.concat(chunks));
 }
 
 let CRC_TABLE = null;
@@ -297,6 +295,18 @@ test('PNG dimensions and colour type are read from the header', () => {
 
     makePng(f, 512, 512, 4);
     assert.strictEqual(readPngInfo(f).hasAlpha, true, 'colour type 4 is grey+alpha');
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('a tRNS chunk makes an otherwise opaque PNG report alpha', () => {
+  const dir = tmpdir();
+  try {
+    const f = path.join(dir, 'a.png');
+    // RGB colour type with a single transparent colour.
+    makePng(f, 1024, 1024, 2, Buffer.from([0xff, 0xff, 0xff]));
+    assert.strictEqual(readPngInfo(f).hasAlpha, true, 'tRNS adds transparency to RGB');
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }
