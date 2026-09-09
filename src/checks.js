@@ -289,6 +289,16 @@ function checkIcon(iconInfo) {
       'Rejected by App Store Connect on upload before review even starts.'
     );
   }
+  if (iconInfo.unsupported) {
+    return v(
+      'icon',
+      'App icon is not a valid PNG',
+      FAIL,
+      `${iconInfo.path}: the file at that path is not a PNG. App Store Connect only accepts a 1024x1024 PNG as the marketing icon, and an invalid image fails at upload rather than at build.`,
+      'Convert your icon to a 1024x1024 PNG with no alpha channel.',
+      'Rejected by App Store Connect on upload before review even starts.'
+    );
+  }
   const problems = [];
   if (iconInfo.width !== iconInfo.height) problems.push(`it is ${iconInfo.width}x${iconInfo.height}, not square`);
   else if (iconInfo.width < 1024) problems.push(`it is ${iconInfo.width}x${iconInfo.width}, below the required 1024x1024`);

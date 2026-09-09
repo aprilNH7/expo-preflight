@@ -251,6 +251,13 @@ test('a missing icon fails rather than being skipped', () => {
   assert.match(r.detail, /after the build minutes are spent/);
 });
 
+test('a non-png icon is reported as an upload failure', () => {
+  const r = checkIcon({ path: 'icon.jpg', unsupported: true });
+  assert.strictEqual(r.status, FAIL);
+  assert.match(r.detail, /not a PNG/);
+  assert.match(r.rejects, /App Store Connect/);
+});
+
 // --- bundle ids ----------------------------------------------------------
 
 test('placeholder identifiers are caught on both platforms', () => {
