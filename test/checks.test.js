@@ -76,6 +76,13 @@ test('an ignored key passes', () => {
   assert.strictEqual(r.status, PASS);
 });
 
+test('a mix of ignored and unignored secret files still fails', () => {
+  const r = checkSecretFiles(['AuthKey_9F8X.p8', 'dist.p12'], '*.p8\n');
+  assert.strictEqual(r.status, FAIL);
+  assert.match(r.detail, /dist\.p12/);
+  assert.ok(!r.detail.includes('AuthKey_9F8X.p8'), 'ignored files should not be listed');
+});
+
 test('no credential files at all passes', () => {
   assert.strictEqual(checkSecretFiles([], '').status, PASS);
 });
