@@ -29,6 +29,8 @@ Exit codes
   0  no blocking problems
   1  at least one blocking problem (or any warning under --strict)
   2  no Expo project found here
+
+A missing project is deliberately not 1, so a misconfigured CI path does not look like a failing app.
 `;
 
 function parseArgs(argv) {
