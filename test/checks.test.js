@@ -283,6 +283,12 @@ test('a missing android package is called out by name', () => {
   assert.match(r.detail, /expo\.android\.package/);
 });
 
+test('a missing ios bundle identifier is called out by name', () => {
+  const r = checkBundleIds(null, 'com.iqgen.energy');
+  assert.strictEqual(r.status, FAIL);
+  assert.match(r.detail, /expo\.ios\.bundleIdentifier/);
+});
+
 test('real identifiers pass', () => {
   assert.strictEqual(checkBundleIds('com.iqgen.energy', 'com.iqgen.energy').status, PASS);
 });
