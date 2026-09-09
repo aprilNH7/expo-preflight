@@ -433,6 +433,10 @@ test('fingerprint policy passes', () => {
   assert.strictEqual(checkRuntimeVersion({ policy: 'fingerprint' }, '1.0.0', true).status, PASS);
 });
 
+test('nativeVersion policy passes', () => {
+  assert.strictEqual(checkRuntimeVersion({ policy: 'nativeVersion' }, '1.0.0', true).status, PASS);
+});
+
 test('a missing runtimeVersion with OTA on is a blocker, because updates can crash on launch', () => {
   const r = checkRuntimeVersion(null, '1.0.0', true);
   assert.strictEqual(r.status, FAIL);
