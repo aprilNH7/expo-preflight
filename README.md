@@ -114,6 +114,7 @@ Warnings do not fail the build by default. Add `--strict` if you want them to.
 --json          machine-readable output
 --verbose       include checks skipped as not applicable
 --dir <path>    project directory, default cwd
+--no-warn-exit  exit 0 even with warnings (default already ignores warnings)
 --strict        exit 1 on warnings too
 ```
 
