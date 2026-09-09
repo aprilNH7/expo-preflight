@@ -46,6 +46,10 @@ test('comments and blank lines are not rules', () => {
   assert.ok(!gitignoreCovers('# *.p8\n\n', 'AuthKey.p8'));
 });
 
+test('trailing comments on a rule are ignored', () => {
+  assert.ok(gitignoreCovers('*.p8 # ignore APNs keys\n', 'AuthKey.p8'));
+});
+
 test('a negation is never what covers a file', () => {
   // "!*.p8" un-ignores; treating it as a match would report the file as safe.
   assert.ok(!gitignoreCovers('!*.p8\n', 'AuthKey.p8'));

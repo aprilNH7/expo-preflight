@@ -58,7 +58,7 @@ const SECRET_FILE_PATTERNS = [
 function gitignoreCovers(gitignore, filename) {
   const lines = String(gitignore || '')
     .split('\n')
-    .map((l) => l.trim())
+    .map((l) => l.split(' #')[0].trim())
     .filter((l) => l && !l.startsWith('#'));
 
   const base = filename.replace(/^.*\//, '');
