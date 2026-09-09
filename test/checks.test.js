@@ -295,6 +295,13 @@ test('the warning admits it cannot see App Store Connect', () => {
   assert.match(checkStoreUrls({}).fix, /cannot verify/);
 });
 
+test('a missing support url alone is still warned', () => {
+  const r = checkStoreUrls({ privacyPolicyUrl: 'https://x.com/p' });
+  assert.strictEqual(r.status, WARN);
+  assert.match(r.detail, /support URL/);
+  assert.ok(!r.detail.includes('privacy policy URL'));
+});
+
 // --- export compliance --------------------------------------------------
 
 test('an unanswered encryption question warns and explains it is a stall', () => {
