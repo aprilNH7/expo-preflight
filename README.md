@@ -118,6 +118,8 @@ Warnings do not fail the build by default. Add `--strict` if you want them to.
 --strict        exit 1 on warnings too
 ```
 
+Skipped checks are hidden by default; add `--verbose` to see them.
+
 Exit codes are `0` clean, `1` problems found, `2` no Expo project in that directory. A missing project is deliberately not `1`, so a misconfigured CI path does not look like a failing app.
 
 ## What it does not do
